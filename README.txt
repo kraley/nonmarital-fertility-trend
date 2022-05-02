@@ -1,3 +1,5 @@
+US nonmarital fertility trends using the National Survey of Family Growth 2006-2015
+
 The code in this directory runs analyses to identify the sources of decline in non-marital fertility rates between 2003 and 2015 using data from the National Survey of Family Growth (NSFG).
 This analysis relies on the publicly available female respondent files from the NSFG cycles 2006-2010, 2011-2013, and 2013-2015.
 
