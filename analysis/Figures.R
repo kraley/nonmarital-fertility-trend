@@ -7,8 +7,9 @@
 # Read in data
 # These data come from the NCHS vital stats, downloaded raw data from the following website: 
 # https://healthdata.gov/dataset/nchs-birth-rates-unmarried-women-age-race-and-hispanic-origin-united-states
-nmfr <- read.csv(file = (paste0(original, "/cohab_fertility/Tables/NCHS_-_Birth_Rates_for_Unmarried_Women_by_Age__Race__and_Hispanic_Origin__United_States.csv")), 
+nmfr <- read.csv(file = (paste0(NSFGKeep, "/NCHS_-_Birth_Rates_for_Unmarried_Women_by_Age__Race__and_Hispanic_Origin__United_States.csv")), 
                  header=TRUE, sep=",")
+
 # Check data
 head(nmfr)
 
@@ -32,11 +33,11 @@ levels(nmfr$race)
 # It seems that Black doesn't mean NH Black according to documentation in Table 15 & 16 in Martin et al 2017
 # "Rates cannot be computed for unmarried non-Hispanic black women or for American Indian or Alaska
 # Native women because the necessary populations are not available"
-nmfr$race <- recode_factor(nmfr$race, "Black total" = "Black",
+nmfr$race <- recode_factor(nmfr$race, "Black total" = "Non-Hispanic Black",
                                       "Non-Hispanic white" = "Non-Hispanic White")
 levels(nmfr$race)
 # Reorder levels of factor var
-nmfr$race <- factor(nmfr$race, levels=c("Non-Hispanic White", "Black", "Hispanic"))
+nmfr$race <- factor(nmfr$race, levels=c("Non-Hispanic White", "Non-Hispanic Black", "Hispanic"))
 levels(nmfr$race)
 
 
@@ -80,8 +81,106 @@ nmfr %>%
 ## Figure of pregnancy rates by cp method over study period ##
 ##############################################################
 
+# # line graph plotting pregnancy rate for each method during periods 1, 2, 3
+# # faceted by age
+# 
+# ratesbymethod <- read_excel(paste0(NSFGKeep, "/pregratesbymethod.xlsx"))
+# head(ratesbymethod)
+# 
+# # Assign some labels
+# ratesbymethod$age <- factor(ratesbymethod$age,
+#                             levels = c(1,2),
+#                             labels = c("Teens", "Twenties"))
+# ratesbymethod$period <- factor(ratesbymethod$period,
+#                                levels = c(1, 2, 3),
+#                                labels = c("03-06", "07-10", "11-15"))
+# ratesbymethod$method <- factor(ratesbymethod$method,
+#                                levels = c(0, 2, 3, 4),
+#                                labels = c("Overall", "LARC and Hormonal", "Less-effective methods", "No method"))
+# 
+# # FLAG: these are rounding; why? Probably doesn't matter since these aren't really close up graphs, but...
+# ratesbymethod <- ratesbymethod %>%
+#                     mutate(ann_pregrate = pregrate * 12 * 1000)
+# ratesbymethod <- ratesbymethod %>%
+#                     mutate(ann_se_pregrate = (sqrt(var_pregrate))*12*1000)
+# ratesbymethod <- ratesbymethod %>%
+#                     mutate(ann_ci_pregrate = ann_se_pregrate * 1.96)
+# 
+# # Generate plot
+# ratesbymethod %>%
+#   ggplot(aes(x=period, y=ann_pregrate, group=method)) + 
+#   geom_line(aes(linetype=method))+
+#   labs(linetype = "") +
+#   ggtitle("Figure 2. Fertile pregnancy rates with standard errors by contraceptive method \namong sexually active Black and Hispanic women, 2003-2015") +
+#   facet_wrap(~age) +
+#   ylab("Pregnancy rate per 1,000 women") +
+#   xlab("Study period") +
+#   geom_pointrange(aes(ymin=ann_pregrate-ann_se_pregrate, ymax=ann_pregrate+ann_se_pregrate)) +
+#   scale_linetype_manual(values=c("solid", "longdash", "dotdash", "dotted")) +
+#   scale_shape_manual(0) +
+#   theme_bw() +
+#   theme(plot.title = element_text(hjust = 0.5)) +
+#   theme(legend.position = "bottom") +
+#   ggsave(paste0(results,"/Figure.pregratesbymethod.sepbyage.pdf"), device = "pdf")
+
+
+##############################################################
+## Figure of pregnancy rates by cp method over study period ##
+## among b&h women in their 20s, sep by raceethn
+##############################################################
+
 # line graph plotting pregnancy rate for each method during periods 1, 2, 3
-# faceted by age
+# faceted by raceethn
+
+ratesbymethod <- read_excel(paste0(NSFGKeep, "/pregratesbymethodbyraceethn20s.xlsx"))
+head(ratesbymethod)
+
+# Assign some labels
+ratesbymethod$raceethn <- factor(ratesbymethod$raceethn,
+                            levels = c(1,2),
+                            labels = c("Hispanic", "Black"))
+ratesbymethod$period <- factor(ratesbymethod$period,
+                               levels = c(1, 2, 3),
+                               labels = c("04-06", "04-10", "12-14"))
+ratesbymethod$method <- factor(ratesbymethod$method,
+                               levels = c(0, 2, 3, 4),
+                               labels = c("Overall", "LARC and Hormonal", "Less-effective methods", "No method"))
+
+# FLAG: these are rounding; why? Probably doesn't matter since these aren't really close up graphs, but...
+ratesbymethod <- ratesbymethod %>%
+  mutate(ann_pregrate = pregrate * 12 * 1000)
+ratesbymethod <- ratesbymethod %>%
+  mutate(ann_se_pregrate = (sqrt(var_pregrate))*12*1000)
+ratesbymethod <- ratesbymethod %>%
+  mutate(ann_ci_pregrate = ann_se_pregrate * 1.96)
+
+# Generate plot only among Black women
+ratesbymethod %>%
+  filter(raceethn == "Black") %>%
+  ggplot(aes(x=period, y=ann_pregrate, group=method)) + 
+  geom_line(aes(linetype=method))+
+  labs(linetype = "") +
+  ggtitle("Figure 2. Fertile pregnancy rates by contraceptive method \namong sexually active non-Hispanic Black women age 20-29, \n2004-2014") +
+  ylab("Fertile pregnancy rate per 1,000") +
+  xlab("Study period") +
+  geom_pointrange(aes(ymin=ann_pregrate-ann_se_pregrate, ymax=ann_pregrate+ann_se_pregrate)) +
+  scale_linetype_manual(values=c("solid", "longdash", "dotdash", "dotted")) +
+  scale_shape_manual(0) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(legend.position = "bottom") +
+  labs(caption = "Note: Error bars represent 95% confidence interval")
+  ggsave(paste0(results,"/Figure2.pregratesbymethod.20sBlack.pdf"), device = "pdf", width = 7)
+
+
+##############################################################
+## Figure of pregnancy rates by cp method over study period ##
+## Only for women in their 20s                              ##
+##############################################################
+# Black and Hispanic women combined
+
+# line graph plotting pregnancy rate for each method during periods 1, 2, 3
+# only among women in their 20s
 
 ratesbymethod <- read_excel(paste0(NSFGKeep, "/pregratesbymethod.xlsx"))
 head(ratesbymethod)
@@ -92,27 +191,27 @@ ratesbymethod$age <- factor(ratesbymethod$age,
                             labels = c("Teens", "Twenties"))
 ratesbymethod$period <- factor(ratesbymethod$period,
                                levels = c(1, 2, 3),
-                               labels = c("03-06", "07-10", "11-15"))
+                               labels = c("04-06", "08-10", "12-14"))
 ratesbymethod$method <- factor(ratesbymethod$method,
                                levels = c(0, 2, 3, 4),
                                labels = c("Overall", "LARC and Hormonal", "Less-effective methods", "No method"))
 
 # FLAG: these are rounding; why? Probably doesn't matter since these aren't really close up graphs, but...
 ratesbymethod <- ratesbymethod %>%
-                    mutate(ann_pregrate = pregrate * 12 * 1000)
+  mutate(ann_pregrate = pregrate * 12 * 1000)
 ratesbymethod <- ratesbymethod %>%
-                    mutate(ann_se_pregrate = (sqrt(var_pregrate))*12*1000)
+  mutate(ann_se_pregrate = (sqrt(var_pregrate))*12*1000)
 ratesbymethod <- ratesbymethod %>%
-                    mutate(ann_ci_pregrate = ann_se_pregrate * 1.96)
+  mutate(ann_ci_pregrate = ann_se_pregrate * 1.96)
 
 # Generate plot
 ratesbymethod %>%
+  filter(age=="Twenties") %>%
   ggplot(aes(x=period, y=ann_pregrate, group=method)) + 
   geom_line(aes(linetype=method))+
   labs(linetype = "") +
-  ggtitle("Figure 2. Fertile pregnancy rates with standard errors by contraceptive method \namong sexually active Black and Hispanic women, 2003-2015") +
-  facet_wrap(~age) +
-  ylab("Pregnancy rate per 1,000 women") +
+  ggtitle("Figure 2. Fertile pregnancy rates with standard errors by contraceptive method \namong sexually active Black and Hispanic women ages 20-29, \n2004-2014") +
+  ylab("Pregnancy rate per 1,000") +
   xlab("Study period") +
   geom_pointrange(aes(ymin=ann_pregrate-ann_se_pregrate, ymax=ann_pregrate+ann_se_pregrate)) +
   scale_linetype_manual(values=c("solid", "longdash", "dotdash", "dotted")) +
@@ -120,5 +219,5 @@ ratesbymethod %>%
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5)) +
   theme(legend.position = "bottom") +
-  ggsave(paste0(results,"/Figure2.pregratesbymethod.sepbyage.pdf"), device = "pdf")
+  ggsave(paste0(results,"/Figure2.pregratesbymethod.BH.twenties.pdf"), width = 6.70, device = "pdf")
 

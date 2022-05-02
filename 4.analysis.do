@@ -16,15 +16,16 @@ do "analysis/4.sample_counts.do"
 do "analysis/4.Table1_descriptive.do"
 
 // Distribution of person-months by relationship status and contraceptive use
-// separately for teens (table 2) and twenties (table 3)
-do "analysis/4.Table2and3_distribution_relstatcpuse_byage_blackandhispanic.do"
+// for Black women in their 20s
+do "analysis/4.Table2_distribution_relstatcpuse_byage_blackwomen.do"
 
-// Accompanying table of trends by period, which also assess statistical significance in changes
-// between periods
-do "analysis/4.Table4_pregratesbycp_blackhispanic.do"
+// Decomposition of trends by contraceptive use
+// for Black women in their 20s 
+do "analysis/4.Table3_decomposition_cpuse_byage_blackwomen.do"
 
-// Appendix tables decomposing trends based on cp use separately for teens and twenties
-do "analysis/4.Appendix_decomposition_cpuse_byage_blackhispanic.do"
+// Appendix table 1: decomposition by relationship status
+// for Black women in their 20s
+do "analysis/4.Appendix_decomposition_relstat_blackwomen.do"
 
 *************
 ** FIGURES **
@@ -33,34 +34,20 @@ do "analysis/4.Appendix_decomposition_cpuse_byage_blackhispanic.do"
 // Figures are generated in R
 do "analysis/FiguresinR.do"
 
-*******************
-** DECOMPOSITION **
-*******************
-// For description in text, decomposition focused on black and hispanic women
-
-// Decompose changes due to changes in relationship status
-do "analysis/4.decomposition_relstat_byage_blackhispanic.do"
+// Table of trends by period, which also assess statistical significance in changes
+// between periods - used to accompany Figure 2 with values reported in text.
+do "analysis/4.TableforFig2_pregratesbycp_blackwomen.do"
 
 
 **************************
 ** SENSITIVITY ANALYSES **
 **************************
 
-// Without immigrant women
-// Relationship status
-do "analysis/4.decomposition_relstat_byage_blackhispanic_immigrantsensitivity.do"
-// Contraceptive trends
-do "analysis/4.decomposition_cpuse_byage_blackhispanic_immigrantsensitivity.do"
-
-** Separately for black and hispanic women
-// Relationship status trends - file only decomposes periods 1 v 2
-do "analysis/4.decomposition_relstat_byage_byrace.do"
-// Contraceptive trends
-// Does full decomp in stata window, only exports periods 1 v 2
-do "analysis/4.decomposition_cpuse_byage_byrace.do"
-
-** With only 1 year window of contraceptive and sexual activity reporting
+// With only 1 year window of contraceptive and sexual activity reporting
 // Relationship status trends
-do "analysis/4.decomposition_cpuse_byage_blackhispanic_timesensitivity.do"
+do "analysis/4.sensitivity_time_decomposition_relstat_blackwomen.do"
 // Contraceptive trends
-do "analysis/4.decomposition_cpuse_byage_blackhispanic_timesensitivity.do"
+do "analysis/4.sensitivity_time_decomposition_cpuse_blackwomen.do"
+
+// Multiple method use
+do "analysis/4.sensitivity_nmethods_decomposition_cpuse_blackwomen.do"

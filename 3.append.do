@@ -2,9 +2,6 @@
 ** Append wide data **
 **********************
 
-// FLAG FOR FOLLOW UP: should build in an error message in these append commmands in case
-// something doesn't go correctly
-
 use "$NSFGKeep/0610cohabfertwide.dta", clear
 append using "$NSFGKeep/1113cohabfertwide.dta"
 append using "$NSFGKeep/1315cohabfertwide.dta"
@@ -45,11 +42,13 @@ append using "$NSFGKeep/1315cohabfertlongrecodes.dta"
 tab year
 // Generate a period variable, which groups observations by the person-month of observation.
 gen period = .
-replace period = 1 if year >= 2003 & year < 2007
-replace period = 2 if year >= 2007 & year < 2011
-replace period = 3 if year >= 2011 & year <2016
-label define period 1 "03-06" 2 "07-10" 3 "11-15"
+replace period = 1 if year >= 2004 & year < 2007
+replace period = 2 if year >= 2008 & year < 2011
+replace period = 3 if year >= 2012 & year < 2014
+label define period 1 "04-06" 2 "08-10" 3 "12-14"
 label values period period
+// Exclude observations outside of the study periods
+// replace exclude = 1 if period == .
 
 
 // Exclude observations from case 31005

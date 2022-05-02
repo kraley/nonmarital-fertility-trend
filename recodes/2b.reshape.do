@@ -17,11 +17,12 @@ CMMONSX WGT* SECU SEST 							   	   ///
 mc180-mc528 										   /// marriage/cohabitation status in each person month between 15-44
 p180-p528 											   /// person-month 9 months prior to birth; same as "rrpm"
 censorpreg180-censorpreg528							   /// person-months which will be censored due to an ongoing preg (no risk of pregnancy)
+conceptionmo_ongoing180-conceptionmo_ongoing528 	   /// person-months of conception for pregnancies that haven't resulted in births by interview
 sexmonth180-sexmonth528 							   /// person-month sex
 cpmethodmonth180-cpmethodmonth528					   /// person-month cpmethod
 nmethodsmonth180-nmethodsmonth528					   /// person-month number of methods used in a month
 curage FMARIT EDUCMOM CMFSTSEX RHADSEX EVERUSED BRNOUT NONMARR cohpend4 cohp5 ongoingpregcount wave exclude weight?? ///
-curmethod reasonfornocp intendparity CONSTAT1 infecundnosterdate CMJAN3YR
+curmethod reasonfornocp intendparity CONSTAT1 infecundnosterdate CMJAN3YR misschk
 
 drop cohdur*
 
@@ -29,7 +30,7 @@ drop cohdur*
 // reshape long p censorpreg mc sexmonth cpmethodmonth nmethodsmonth, i(CASEID)j(agemonth)
 // Using an alternative reshape command, tolong, which needs to be installed (ssc install tolong).
 // The setup file for this analysis should require this package before running.
-tolong p censorpreg mc sexmonth cpmethodmonth nmethodsmonth, i(CASEID)j(agemonth)
+tolong p censorpreg conceptionmo_ongoing mc sexmonth cpmethodmonth nmethodsmonth, i(CASEID)j(agemonth)
 
 // reapply labels which are lost in tolong
 label values mc mcstatus

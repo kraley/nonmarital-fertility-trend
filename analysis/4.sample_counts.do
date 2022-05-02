@@ -14,6 +14,10 @@ recode HISPRACE (1=1)(3=1)(2=2)(4=3), gen(racethn)
 label define racethn 1 "Black or Hispanic" 2 "NH White" 3 "NH other"
 label values racethn racethn
 
+// indicator of twenties
+gen twenties = 0
+replace twenties = 1 if age1 == 2 | age1 == 3
+
 ************************************
 ** Sample size - reported in text **
 ************************************
@@ -21,43 +25,57 @@ preserve
 
 // Remove if doesn't meet previously set inclusion criteria
 keep if exclude == 0
+// Remove people who are not white, black , or hispanic
+drop if racethn == 3
+// Remove person-months that aren't in 20s.
+drop if age1 == 1 | age1 == .
+// Remove person-months that aren't in the periods of analysis
+drop if period == .
 
+** Sample counts for women in 20s 
 // Person-months in analysis, which includes white, black, and hispanic women
-count if racethn != 3
+count if racethn != 3 & nmarsta != .
 
 // Count of women, in which total number of person-months are nested
 egen Nwomen = tag(CASEID)
-count if Nwomen == 1 & racethn != 3
+count if Nwomen == 1 
 
 // Distribution of observations by survey
-tab wave if racethn != 3
+tab wave 
 
 // Number of observations per person
 // count number of person-months by CASEID - var has same value within CASEID
 bysort CASEID: generate obsperperson = _N
 // summarize one observation per per (tagged with Nwomen == 1) if in analytic sample
-sum obsperperson if Nwomen == 1 & racethn != 3
+sum obsperperson if Nwomen == 1
 // hist obsperperson if Nwomen == 1 & racethn != 3, discrete percent
 
 // Number of pregnancies total
-count if p == 1 & racethn != 3
+count if p == 1
+
+// Number of pregnancies that haven't resulted in births by time of interview
+// but are at least 3mo along
+tab mobeforeinterview conceptionmo_ongoing 
+// list CASEID wave if mobeforeinterview == 28 & conceptionmo_ongoing == 1
+count if conceptionmo_ongoing == 1 
+count if mobeforeinterview >= 3 & mobeforeinterview <= 9 
 
 // Number of pregnancies per woman
 bysort CASEID: egen pregsperperson = total(p)
-tab pregsperperson if Nwomen == 1 & racethn != 3
+tab pregsperperson if Nwomen == 1 
 
 
-** Sexually active Black and Hispanic women
-// Number of person-months among sexually active Black and Hispanic women
-count if racethn == 1 & (nmarsta == 1 | nmarsta == 2)
+** Sexually active Black women in their 20s
+// Number of person-months among sexually active Black
+count if HISPRACE == 3 & ((nmarsta == 1 | nmarsta == 2) & sexmonth == 1)
 
 // Number of women in which these person-months are nested
 // marst can change, so we need to count number of women who are *ever* sexually active or cohabiting
 drop Nwomen obsperperson pregsperperson
 
 
-// only include black and hisp women
-drop if racethn != 1
+// only include black women
+drop if HISPRACE != 3
 // determine thier lowest value of nmarsta
 // Gen a var that is the minimum value of marst w/in one person-- 
 // cohab == 1, sexually active == 2, single not sexually active == 3
@@ -66,7 +84,7 @@ drop if minmarst == 3
 
 // gen indicator of whether that person-month is included in analysis
 // drop those excluded
-gen countobs = 1 if nmarsta == 1 | nmarsta == 2
+gen countobs = 1 if (nmarsta == 1 | nmarsta == 2) & sexmonth == 1
 drop if countobs != 1
 count // should match line 52; it does!
 
@@ -94,12 +112,35 @@ restore
 // e.g. if someone is always married for all of the months we observe, or if they have missing
 // data for all sexual activity.
 
-keep if racethn == 1 | racethn == 2
+// Remove people who are not white, black , or hispanic
+drop if racethn == 3
+// Remove person-months that aren't in 20s.
+drop if age1 == 1 | age1 == . 
+// Remove person-months that aren't in the periods of analysis
+drop if period == .
+
 egen Nwomen = tag(CASEID)
 count if Nwomen == 1
 global totaln `r(N)'
 
 gen excludecount = 0
+
+** misschk
+// missing important wide data on marital / cohab start/stop dates
+replace excludecount = 1 if misschk == 1
+drop if excludecount == 1
+drop Nwomen
+egen Nwomen = tag(CASEID)
+count if Nwomen == 1
+
+** Marital status
+// exclude all married person-months
+replace excludecount = 1 if mc == 1
+drop if excludecount == 1
+drop Nwomen
+egen Nwomen = tag(CASEID)
+count if Nwomen == 1
+global nafteralwaysmarried `r(N)'
 
 ** Sexual Activity
 // Sexual activity data are only collected for up to 48 months
@@ -112,14 +153,16 @@ egen Nwomen = tag(CASEID)
 count if Nwomen == 1
 global naftersexmonth `r(N)'
 
-// Drop months in which there is no sexual activity among married and cohabiting couples, and
+// Drop months in which there is no sexual activity among cohabiting couples, and
 // drop months in which sexual activity is unknown among single people
-replace excludecount = 1 if marst == .
+replace excludecount = 1 if sexmonth == .
 drop if excludecount == 1
 drop Nwomen
 egen Nwomen = tag(CASEID)
 count if Nwomen == 1
 global nafternosexcohabmar `r(N)'
+
+display ($naftersexmonth - $nafternosexcohabmar)
 
 ** Contraceptive use
 // If there is sexual activity, but unknown/refused contraceptive use, remove from analysis
@@ -143,6 +186,20 @@ egen Nwomen = tag(CASEID)
 count if Nwomen == 1
 global nafteroutsidecalendar `r(N)'
 
+** close to interview
+replace excludecount = 1 if mobeforeinterview <= 3
+drop if excludecount == 1
+drop Nwomen
+egen Nwomen = tag(CASEID)
+count if Nwomen == 1
+
+** currently pregnant
+replace excludecount = 1 if censorpreg == 1
+drop if excludecount == 1
+drop Nwomen
+egen Nwomen = tag(CASEID)
+count if Nwomen == 1
+
 ** Age
 // Keep data for person months bewteen ages 15-29
 replace excludecount = 1 if (agemonth <= 180 | agemonth >= 360)
@@ -165,14 +222,6 @@ egen Nwomen = tag(CASEID)
 count if Nwomen == 1
 global naftercohabdatalimits `r(N)'
 
-** Marital status
-// exclude all married person-months
-replace excludecount = 1 if mc == 1
-drop if excludecount == 1
-drop Nwomen
-egen Nwomen = tag(CASEID)
-count if Nwomen == 1
-global nafteralwaysmarried `r(N)'
 
 ** Infecundity
 // There are some people who are infecund but do not report a date for sterilization
@@ -184,6 +233,3 @@ drop Nwomen
 egen Nwomen = tag(CASEID)
 count if Nwomen == 1
 global nafterinfecundity `r(N)'
-
-// how many lost to infecundity w/o dates
-display $nafteralwaysmarried - $nafterinfecundity

@@ -34,7 +34,7 @@ tab mc
 
 gen marst = mc
 replace marst = . if mc == 1 & (sexmonth == 0 | sexmonth == .) 	// married person months w/o sexual activity or w/ unknown sexual activity
-replace marst = . if mc == 2 & (sexmonth == 0 | sexmonth == .) 	// cohabiting person months w/o sexual activity or w/ unknown sexual activity
+// replace marst = . if mc == 2 & (sexmonth == 0 | sexmonth == .) 	// cohabiting person months w/o sexual activity or w/ unknown sexual activity
 replace marst = 3 if mc == 0 &  sexmonth == 1 					// single perons-months in which there is sexual activity
 replace marst = 4 if mc == 0 &  sexmonth == 0 					// single person-months in which there is no sexual activity
 replace marst = . if mc == 0 &  sexmonth == . 					// single person months with months they "don't know" re sex

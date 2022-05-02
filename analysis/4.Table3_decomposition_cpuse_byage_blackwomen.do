@@ -1,78 +1,22 @@
-** Appendix decomposition; contraceptive use by age among sexually active Black and Hispanic women
+** Table 3 
+// Decomposition; contraceptive use among sexually active Black women in their 20s
  
-
 // This is a decomposition analysis identifying how much of the trend in non-marital 
-// pregnancy is due to changes in rates w/in method use categories and how much 
+// fertile pregnancy is due to changes in rates w/in method use categories and how much 
 // is due to changes in distribution of method use.
-
-// First we'll generate table shells, then generate estimates 
-// populate two Appendix tables to accompany the manuscript
-// A1: Decomp of cp use among sexually active B & H teens
-// A2: Decomp of cp use among sexually active B & H twenties 
 
 ***************************
 ** Generate table shells **
 ***************************
 
-** Teens 
-putexcel set "$results/A1_teen_decomposition_cpuse_blackhispanic.xlsx", replace
-// Create Shell
-putexcel A1 = "Appendix Table 1. Decomposition of trends in non-marital fertile pregnancy rate by contraceptive method use among unmarried, sexually active Black and Hispanic women ages 15-19"
-putexcel C2= ("Distribution") G2=("Pregnancy Rates")
-putexcel C3=("2003-06") D3=("2007-10") E3=("Change") G3=("2003-06") H3=("2007-10") I3=("# change") J3=("% change")
-
-putexcel A4= ("Comparing 2003-06 and 2007-10") B4 = ("Permanent")
-putexcel B5= "Long-acting reversible method"
-putexcel B6 = "Hormonal"
-putexcel B7 = "Less-effective methods"
-putexcel B8 = "No method"
-putexcel B9 = "Total"
-putexcel C10 = ("Distribution") E10 = ("Rates") G10 = ("Interaction")
-putexcel B11 = "% change due to"
-
-putexcel C12=("2007-10") D12=("2011-15") E12=("Change") G12=("2007-10") H12=("2011-15") I12=("# change") J12=("% change")
-putexcel A13= ("Comparing 2007-10 and 2011-15") B13 = ("Permanent")
-putexcel B14= "Long-acting reversible method"
-putexcel B15 = "Hormonal"
-putexcel B16 = "Less-effective methods"
-putexcel B17 = "No method"
-putexcel B18 = "Total"
-putexcel C19 = ("Distribution") E19 = ("Rates") G19 = ("Interaction")
-putexcel B20 = "% change due to"
-
-
-// Export sample sizes
-// Create Shell
-putexcel A23 = "Sample sizes for decomposition"
-putexcel B24 = "Early Period"
-putexcel B25=("2003-06") C25=("2007-10") 
-
-putexcel A26 = ("Permanent")
-putexcel A27= "LARC"
-putexcel A28 = "Hormonal"
-putexcel A29 = "LEM"
-putexcel A30 = "None"
-putexcel A31 = "Total"
-
-putexcel B33 = "Later Period"
-putexcel B34=("2007-10") C34=("2011-13") 
-
-putexcel A35 = ("Permanent")
-putexcel A36= "LARC"
-putexcel A37 = "Hormonal"
-putexcel A38 = "LEM"
-putexcel A39 = "None"
-putexcel A40 = "Total"
-
-
 ** Twenties 
-putexcel set "$results/A2_twenties_decomposition_cpuse_blackhispanic.xlsx", replace
+putexcel set "$results/Table3_twenties_decomposition_cpuse_black.xlsx", replace
 // Create Shell
-putexcel A1 = "Appendix Table 2. Decomposition of trends in non-marital fertile pregnancy rate by contraceptive method use among unmarried, sexually active Black and Hispanic women ages 20-29"
-putexcel C2= ("Distribution") G2=("Pregnancy Rates")
-putexcel C3=("2003-06") D3=("2007-10") E3=("Change") G3=("2003-06") H3=("2007-10") I3=("# change") J3=("% change")
+putexcel A1 = "Table 3. Decomposition of trends in non-marital fertile pregnancy rate by contraceptive method use among unmarried, sexually active Black women ages 20-29, 2004-2014"
+putexcel C2 = ("Distribution") G2=("Pregnancy Rates")
+putexcel C3 = ("2004-06") D3=("2008-10") E3=("Change") G3=("2004-06") H3=("2008-10") I3=("# change") J3=("% change")
 
-putexcel A4= ("Comparing 2003-06 and 2007-10") B4 = ("Permanent")
+putexcel A4= ("Comparing 2004-06 and 2008-10") B4 = ("Permanent")
 putexcel B5= "Long-acting reversible method"
 putexcel B6 = "Hormonal"
 putexcel B7 = "Less-effective methods"
@@ -81,8 +25,8 @@ putexcel B9 = "Total"
 putexcel C10 = ("Distribution") E10 = ("Rates") G10 = ("Interaction")
 putexcel B11 = "% change due to"
 
-putexcel C12=("2007-10") D12=("2011-15") E12=("Change") G12=("2007-10") H12=("2011-15") I12=("# change") J12=("% change")
-putexcel A13= ("Comparing 2007-10 and 2011-15") B13 = ("Permanent")
+putexcel C12=("2008-10") D12=("2012-14") E12=("Change") G12=("2008-10") H12=("2012-14") I12=("# change") J12=("% change")
+putexcel A13= ("Comparing 2008-10 and 2012-14") B13 = ("Permanent")
 putexcel B14= "Long-acting reversible method"
 putexcel B15 = "Hormonal"
 putexcel B16 = "Less-effective methods"
@@ -96,7 +40,7 @@ putexcel B20 = "% change due to"
 // Create Shell
 putexcel A23 = "Sample sizes for decomposition"
 putexcel B24 = "Early Period"
-putexcel B25=("2003-06") C25=("2007-10") 
+putexcel B25=("2004-06") C25=("2008-10") 
 
 putexcel A26 = ("Permanent")
 putexcel A27= "LARC"
@@ -106,7 +50,7 @@ putexcel A30 = "None"
 putexcel A31 = "Total"
 
 putexcel B33 = "Later Period"
-putexcel B34=("2007-10") C34=("2011-13") 
+putexcel B34=("2008-10") C34=("2012-14") 
 
 putexcel A35 = ("Permanent")
 putexcel A36= "LARC"
@@ -120,7 +64,6 @@ putexcel A40 = "Total"
 ** Decomposition Calculations **
 ******************************** 
 
-
 ** Periods 1 v 2 **
 
 local agegroup teens twens
@@ -132,7 +75,7 @@ local agegroup teens twens
 
 
 // Loop over age groups: 1) teens or 2) twenties
-forvalues a = 1/2 {
+forvalues a = 2/2 {
 
 	// Store name of agegroup in `ageg' (teens or twens)
 	local ageg : word `a' of `agegroup'
@@ -151,12 +94,12 @@ forvalues a = 1/2 {
 	
 	keep if exclude == 0
 	
-	// Only analyze black and hispanic women
-	keep if HISPRACE ==1 | HISPRACE ==3	
+	// Only analyze black women
+	keep if HISPRACE == 3	
 	// Only analyze sexually active and cohabiting person-months
-	keep if nmarsta == 1 | nmarsta == 2
+	keep if (nmarsta == 1 | nmarsta == 2) & sexmonth == 1
 		
-	keep if period ==1 | period == 2
+	keep if period == 1 | period == 2
 		
 	// Svyset data
 	svyset SECU [pweight = xrndweight], strata(SEST)
@@ -193,9 +136,9 @@ forvalues a = 1/2 {
 	// Label the row/column names in the matrix, which at this point is
 	// the distribution of contraceptive method use in each period
 	matrix rownames dist`ageg' = Permanent LARC Hormonal LEM None
-	matrix colnames dist`ageg' = 03-06 07-10
+	matrix colnames dist`ageg' = 04-06 08-10
 
-	display "Distribution of Black and Hispanic women by contraceptive use (`ageg' agegroup)"
+	display "Distribution of Black person-months by contraceptive use (`ageg' agegroup)"
 	matrix list dist`ageg'
 	
 	* Pregnancy rates bycontraceptive method use
@@ -247,9 +190,9 @@ forvalues a = 1/2 {
 	// rate by relationship status among women in the two periods which we are 
 	// comparing among black and Hispanic women
 	matrix rownames pregs`ageg' = Permanent LARC Hormonal LEM None
-	matrix colnames pregs`ageg' = 03-06 07-10
+	matrix colnames pregs`ageg' = 04-06 08-10
 
-	display "Pregnancy rates of Black and Hispanic women by contraceptive use (`ageg' agegroup)"
+	display "Pregnancy rates of Black women by contraceptive use (`ageg' agegroup)"
 	matrix list pregs`ageg'
 
 *********************************************************************
@@ -306,10 +249,10 @@ forvalues a = 1/2 {
 		
 	// Label row/column names and save matrix
 	// Columns are differences in rates, rows are differenecs in distribution
-	matrix rownames scenarios1 = dist_03-06 dist_07-10
-	matrix colnames scenarios1 = rates_03-06 rates_07-10
+	matrix rownames scenarios1 = dist_04-06 dist_08-10
+	matrix colnames scenarios1 = rates_04-06 rates_08-10
 
-	display "Non-Marital Pregnancy rates for Black and Hispanic women under different scenarios"
+	display "Non-Marital Pregnancy rates for Black women under different scenarios"
 	matrix list scenarios1`re'
 
 *********************************************************************
@@ -319,17 +262,17 @@ forvalues a = 1/2 {
 	// Calculate difference in observed nonmarital fertility between periods; 
 	// the difference on the diag.
 	local adiff`ageg'2: di %5.2f = scenarios1[2,2] - scenarios1[1,1] 
-	display "Between period 03-06 and 07-10 the non-marital fertility rates increased by `adiff`ageg'2' births per 1,000 women Black and Hispanic women (a negative value indicates a decline in the non-marital fertility rate)."
+	display "Between period 04-06 and 08-10 the non-marital fertility rates increased by `adiff`ageg'2' births per 1,000 women Black women (a negative value indicates a decline in the non-marital fertility rate)."
    
 	// Calculate difference if distribution was unchanged -- call it rdiff  for rates differing
 	// Rate differences are across columns, so compare cells [1,1 ] and [1,2]
 	local rdiff`ageg'2: di %5.2f = scenarios1[1,2] - scenarios1[1,1]
-	display "The change in non-marital fertility rates between period 03-06 and 07-10 if distributions had remained unchanged would be `rdiff`ageg'2'."
+	display "The change in non-marital fertility rates between period 04-06 and 08-10  if distributions had remained unchanged would be `rdiff`ageg'2'."
 
 	// Calculate difference if rates were unchanged unchanged -- call it ddiff, for distributions differing
 	// Distribution differences are across rows, so compare fertility rates in cells [2,1] and [1,1]
 	local ddiff`ageg'2: di %5.2f = scenarios1[2,1] - scenarios1`re'[1,1]
-	display "The change in non-marital fertility rates between period 03-06 and 07-10 if rates had remained unchanged would be `ddiff`ageg'`re'2'"
+	display "The change in non-marital fertility rates between period 04-06 and 08-10 if rates had remained unchanged would be `ddiff`ageg'`re'2'"
 
 * Proportion of difference due to rates and to distribution   
 
@@ -342,7 +285,7 @@ forvalues a = 1/2 {
 	// Interaction is x when prop rates + prop dist + x = 100 %
 	local pdiff_int`ageg'2: di %4.1f = 100-`pdiff_rates`ageg'2' - `pdiff_dist`ageg'2'
   
-	display "Rates account for `pdiff_rates`ageg'2' percent of the difference in non-marital fertility rates between period 03-06 and 07-10. Distribution accounts for `pdiff_dist`ageg'2' percent and the interaction accounts for `pdiff_int`ageg'2' percent."
+	display "Rates account for `pdiff_rates`ageg'2' percent of the difference in non-marital fertility rates between period 04-06 and 08-10. Distribution accounts for `pdiff_dist`ageg'2' percent and the interaction accounts for `pdiff_int`ageg'2' percent."
  
 	di " "
 	di "************************************************************************************************************ "
@@ -353,55 +296,18 @@ forvalues a = 1/2 {
 ** Populate top half of tables **
 *********************************
 
-
-* teens
-putexcel set "$results/A1_teen_decomposition_cpuse_blackhispanic.xlsx", modify 
-putexcel C4=matrix(distteens), nformat(percent)
-putexcel G4=matrix(pregsteens), nformat(###.#)
-putexcel C9=formula(+C4+C5+C6+C7+C8), nformat(percent)
-putexcel D9=formula(+C4+D5+D6+D7+D8), nformat(percent)
-putexcel G9=`nmfrateteens11', nformat(###.#)
-putexcel H9=`nmfrateteens22', nformat(###.#) 
-
-putexcel C11=`pdiff_distteens2', nformat(###.#)
-putexcel E11=`pdiff_ratesteens2', nformat(###.#)
-putexcel G11=`pdiff_intteens2', nformat(###.#)
-
-
-// export counts
-local columns B C
-local startrow = 26
-
-forvalues p=1/2 {
-	local col : word `p' of `columns'
-	local row = `startrow'
-	forvalues s=1/5 {
-		putexcel `col'`row'=matrix(ccount1`p'`s'), nformat(number_sep)
-		display "startrow = `startrow' row = `row'"
-		matrix list ccount1`p'`s'
-		local row=`row'+1
-	}
-	local row = `startrow'
-}
-
-// fill in totals
-foreach col in B C {
-	putexcel `col'31=formula(+`col'26 + `col'27 + `col'28 + `col'29 + `col'30), nformat(number_sep)
-}
-
-
 * Twens
-putexcel set "$results/A2_twenties_decomposition_cpuse_blackhispanic.xlsx", modify 
+putexcel set "$results/Table3_twenties_decomposition_cpuse_black.xlsx", modify 
 putexcel C4=matrix(disttwens), nformat(percent)
-putexcel G4=matrix(pregstwens), nformat(###.#)
+putexcel G4=matrix(pregstwens), nformat("0.0")
 putexcel C9=formula(+C4+C5+C6+C7+C8), nformat(percent)
-putexcel D9=formula(+C4+D5+D6+D7+D8), nformat(percent)
-putexcel G9=`nmfratetwens11', nformat(###.#)
-putexcel H9=`nmfratetwens22', nformat(###.#) 
+putexcel D9=formula(+D4+D5+D6+D7+D8), nformat(percent)
+putexcel G9=`nmfratetwens11', nformat("0.0")
+putexcel H9=`nmfratetwens22', nformat("0.0") 
 
-putexcel C11=`pdiff_disttwens2', nformat(###.#)
-putexcel E11=`pdiff_ratestwens2', nformat(###.#)
-putexcel G11=`pdiff_inttwens2', nformat(###.#)
+putexcel C11=`pdiff_disttwens2', nformat("0.0")
+putexcel E11=`pdiff_ratestwens2', nformat("0.0")
+putexcel G11=`pdiff_inttwens2', nformat("0.0")
 
 // export counts
 local columns B C
@@ -429,7 +335,6 @@ foreach col in B C {
 ** DECOMP: Period 2 v 3 **
 **************************
 
-
 local agegroup teens twens
 
 // Loops from wide to narrow: age group (teens, twens);  period (second, third); 
@@ -439,7 +344,7 @@ local agegroup teens twens
 
 
 // Loop over age groups: 1) teens or 2) twenties
-forvalues a = 1/2 {
+forvalues a = 2/2 {
 
 	// Store name of agegroup in `ageg' (teens or twens)
 	local ageg : word `a' of `agegroup'
@@ -458,10 +363,10 @@ forvalues a = 1/2 {
 	
 	keep if exclude == 0
 	
-	// Only analyze black and hispanic women
-	keep if HISPRACE ==1 | HISPRACE ==3	
+	// Only analyze Black women
+	keep if HISPRACE ==3	
 	// Only analyze sexually active and cohabiting person-months
-	keep if nmarsta == 1 | nmarsta == 2
+	keep if (nmarsta == 1 | nmarsta == 2) & sexmonth == 1
 	
 	// Keep later periods, 2 and 3	
 	keep if period == 2 | period == 3
@@ -490,9 +395,9 @@ forvalues a = 1/2 {
 	// Label the row/column names in the matrix, which at this point is
 	// the distribution of contraceptive method use in each period
 	matrix rownames dist`ageg' = Permanent LARC Hormonal LEM None
-	matrix colnames dist`ageg' = 07-10 11-15
+	matrix colnames dist`ageg' = 08-10 12-14
 
-	display "Distribution of Black and Hispanic women by contraceptive use (`ageg' agegroup)"
+	display "Distribution of Black person-months by contraceptive use (`ageg' agegroup)"
 	matrix list dist`ageg'
 	
 	* Pregnancy rates bycontraceptive method use
@@ -537,9 +442,9 @@ forvalues a = 1/2 {
 	// rate by relationship status among women in the two periods which we are 
 	// comparing among black and Hispanic women
 	matrix rownames pregs`ageg' = Permanent LARC Hormonal LEM None
-	matrix colnames pregs`ageg' = 07-10 11-15
+	matrix colnames pregs`ageg' = 08-10 12-14
 
-	display "Pregnancy rates of Black and Hispanic women by contraceptive use (`ageg' agegroup)"
+	display "Pregnancy rates of Black women by contraceptive use (`ageg' agegroup)"
 	matrix list pregs`ageg'
 
 *********************************************************************
@@ -596,10 +501,10 @@ forvalues a = 1/2 {
 		
 	// Label row/column names and save matrix
 	// Columns are differences in rates, rows are differenecs in distribution
-	matrix rownames scenarios1 = dist_07-10 dist_11-15
-	matrix colnames scenarios1 = rates_07-10 rates_11-15
+	matrix rownames scenarios1 = dist_08-10 dist_12-14
+	matrix colnames scenarios1 = rates_08-10 rates_12-14
 
-	display "Non-Marital Pregnancy rates for Black and Hispanic women under different scenarios"
+	display "Non-Marital Pregnancy rates for Black women under different scenarios"
 	matrix list scenarios1`re'
 
 *********************************************************************
@@ -609,17 +514,17 @@ forvalues a = 1/2 {
 	// Calculate difference in observed nonmarital fertility between periods; 
 	// the difference on the diag.
 	local adiff`ageg'2: di %5.2f = scenarios1[2,2] - scenarios1[1,1] 
-	display "Between period 07-10 and 11-15 the non-marital fertility rates increased by `adiff`ageg'2' births per 1,000 women Black and Hispanic women (a negative value indicates a decline in the non-marital fertility rate)."
+	display "Between period 08-10 and 12-14 the non-marital fertility rates increased by `adiff`ageg'2' births per 1,000 women Black women (a negative value indicates a decline in the non-marital fertility rate)."
    
 	// Calculate difference if distribution was unchanged -- call it rdiff  for rates differing
 	// Rate differences are across columns, so compare cells [1,1 ] and [1,2]
 	local rdiff`ageg'2: di %5.2f = scenarios1[1,2] - scenarios1[1,1]
-	display "The change in non-marital fertility rates between period 07-10 and 11-15 if distributions had remained unchanged would be `rdiff`ageg'2'."
+	display "The change in non-marital fertility rates between period 08-10 and 12-14 if distributions had remained unchanged would be `rdiff`ageg'2'."
 
 	// Calculate difference if rates were unchanged unchanged -- call it ddiff, for distributions differing
 	// Distribution differences are across rows, so compare fertility rates in cells [2,1] and [1,1]
 	local ddiff`ageg'2: di %5.2f = scenarios1[2,1] - scenarios1`re'[1,1]
-	display "The change in non-marital fertility rates between period 07-10 and 11-15 if rates had remained unchanged would be `ddiff`ageg'`re'2'"
+	display "The change in non-marital fertility rates between period 08-10 and 12-14 if rates had remained unchanged would be `ddiff`ageg'`re'2'"
 
 * Proportion of difference due to rates and to distribution   
 
@@ -632,7 +537,7 @@ forvalues a = 1/2 {
 	// Interaction is x when prop rates + prop dist + x = 100 %
 	local pdiff_int`ageg'2: di %4.1f = 100-`pdiff_rates`ageg'2' - `pdiff_dist`ageg'2'
   
-	display "Rates account for `pdiff_rates`ageg'2' percent of the difference in non-marital fertility rates between period 03-06 and 07-10. Distribution accounts for `pdiff_dist`ageg'2' percent and the interaction accounts for `pdiff_int`ageg'2' percent."
+	display "Rates account for `pdiff_rates`ageg'2' percent of the difference in non-marital fertility rates between period 08-10 and 12-14. Distribution accounts for `pdiff_dist`ageg'2' percent and the interaction accounts for `pdiff_int`ageg'2' percent."
  
 	di " "
 	di "************************************************************************************************************ "
@@ -643,76 +548,19 @@ forvalues a = 1/2 {
 
 ** Populate bottom half of table **
 
-** Teens
-putexcel set "$results/A1_teen_decomposition_cpuse_blackhispanic.xlsx", modify
-
-putexcel C13=matrix(distteens), nformat(percent)
-putexcel G13=matrix(pregsteens), nformat(###.#)
-putexcel C18=formula(+C13+C14+C15+C16+C17), nformat(percent)
-putexcel D18=formula(+D13+D14+D15+D16+D17), nformat(percent)
-putexcel G18=`nmfrateteens11', nformat(###.#)
-putexcel H18=`nmfrateteens22', nformat(###.#)
-
-putexcel C20=`pdiff_distteens2', nformat(###.#)
-putexcel E20=`pdiff_ratesteens2', nformat(###.#)
-putexcel G20=`pdiff_intteens2', nformat(###.#)
-
-
-// export counts
-local columns B C
-local startrow = 35
-
-forvalues p=1/2 {
-	local col : word `p' of `columns'
-	local row = `startrow'
-	forvalues s=1/5 {
-		putexcel `col'`row'=matrix(ccount1`p'`s'), nformat(number_sep)
-		display "startrow = `startrow' row = `row'"
-		matrix list ccount1`p'`s'
-		local row=`row'+1
-	}
-	local row = `startrow'
-}
-
-// fill in totals
-foreach col in B C {
-	putexcel `col'40=formula(+`col'35 + `col'36 + `col'37 + `col'38 + `col'39), nformat(number_sep)
-}
-
-
-// calculate change in # and % across periods
-// distribution
-foreach re in 4 13 {
-	local rl = `re' + 5
-		forvalues r = `re' / `rl' {
-			putexcel E`r'=formula((+D`r')-(C`r')), nformat(percent)
-		}
-}
-
-
-// rates
-foreach re in 4 13 {
-	local rl = `re' + 5
-		forvalues r = `re' / `rl' {
-			putexcel I`r'=formula((+H`r')-(G`r')), nformat(###.#)
-			putexcel J`r'=formula((+I`r')/(G`r')), nformat(percent)
-		}
-}
-
-
 * Twens
-putexcel set "$results/A2_twenties_decomposition_cpuse_blackhispanic.xlsx", modify 
+putexcel set "$results/Table3_twenties_decomposition_cpuse_black.xlsx", modify 
 
 putexcel C13=matrix(disttwens), nformat(percent)
-putexcel G13=matrix(pregstwens), nformat(###.#)
+putexcel G13=matrix(pregstwens), nformat("0.0")
 putexcel C18=formula(+C13+C14+C15+C16+C17), nformat(percent)
 putexcel D18=formula(+D13+D14+D15+D16+D17), nformat(percent)
-putexcel G18=`nmfratetwens11', nformat(###.#)
-putexcel H18=`nmfratetwens22', nformat(###.#)
+putexcel G18=`nmfratetwens11', nformat("0.0")
+putexcel H18=`nmfratetwens22', nformat("0.0")
 
-putexcel C20=`pdiff_disttwens2', nformat(###.#)
-putexcel E20=`pdiff_ratestwens2', nformat(###.#)
-putexcel G20=`pdiff_inttwens2', nformat(###.#)
+putexcel C20=`pdiff_disttwens2', nformat("0.0")
+putexcel E20=`pdiff_ratestwens2', nformat("0.0")
+putexcel G20=`pdiff_inttwens2', nformat("0.0")
 
 
 // export counts

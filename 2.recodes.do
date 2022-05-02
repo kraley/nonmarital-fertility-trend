@@ -21,27 +21,5 @@ forvalues i = 1/3 {
 	// Read in saved wide data, reshape to long
 	do "recodes/2b.reshape.do" "`round'"
 	// Read in long data, recode and drop cases to generate and save analytic sample
-	do "recodes/2c.longrecodes.do" "`round'"
-	// Reads in pregnancy file data and extracts intention data
-	do "recodes/2d.pregnancyfilerecodes.do" "`round'" " `rawpregfile'"
-	// Merges pregnancy intentions onto long data file created in 2c
-	do "recodes/2e.pregnancyfilemerge.do" "`round'"
-	
-	** 2a) Export observation counts
-	// Counts of number of observations were recorded in globals at
-	// several points in recoding and reshaping
-	local ncounts $startingN $naftermisordereddatesdrop $nafterreshape ///
-				  $totalpm $naftermissingsexdrops $pmaftersexdrops $nafteragedrops $pmafteragedrops ///
-			      $ongoingpregsbeforedrop $ongoingpregsafter3modrop ///
-			      $naftermostrecent3modrops $pmaftermostrecent3modrops $naftersexmodrops $pmaftersexmodrops
-				  			  
-	putexcel set "$results/observation counts.xlsx", modify
-	putexcel `column'1 = "`round'"
-	local i = 2
-	foreach var in `ncounts' {
-		display `var'
-		putexcel `column'`i' = `var'
-		local i = `i' + 1
-	}
-	
+	do "recodes/2c.longrecodes.do" "`round'"	
 }

@@ -327,7 +327,9 @@ summarize birth*
 // CM age at beginning of each pregnancy that ended in live birth OR is current at time of interview
 summarize PREGNUM
 forvalues i = 1/`r(max)' {
-	gen pg`i' = DATCON`i' - CMBIRTH if (OUTCOM`i' == 1 | OUTCOM`i' == 6) // for current pregnancy and live birth 
+	gen pg`i'        = DATCON`i' - CMBIRTH if (OUTCOM`i' == 1 | OUTCOM`i' == 6) // for current pregnancy and live birth 
+	// Specifically identify conception mo for pregnancies that are ongoing.
+	gen pg`i'ongoing = DATCON`i' - CMBIRTH  if OUTCOM`i' == 6
 } 
 summarize pg*
 
@@ -351,9 +353,14 @@ summarize PREGNUM
 local maxpreg `r(max)'
 forvalues i=180/528 {
 	gen p`i' = 0 
+	gen conceptionmo_ongoing`i' = 0
 		forvalues j = 1/`maxpreg' {
 		replace p`i' = 1 if pg`j' == `i'
 		replace p`i' = . if `i' > curage
+
+		// Identify agomo that each pregnancy that is ongoing starts in.
+		replace conceptionmo_ongoing`i' = 1 if pg`j'ongoing == `i'
+		replace conceptionmo_ongoing`i' = . if `i' > curage
 	}
 }
 
@@ -784,7 +791,8 @@ tab curmethodstercor CONSTAT1 if curage <= 528, m
 // For those who *aren't* reporting that their current method is sterilization, however, 
 // we'll want to flag them because we don't know when they became sterile, i.e. we don't know
 // when they switched contraceptive method use and/or stopped being at risk for pregnancy.
-// FLAG FOR FOLLOW-UP: What to do with those who are sterile but we don't have dates associated with their sterility?
+// What to do with those who are sterile but we don't have dates associated with their sterility?
+// We will exclude them from analysis - we have no info on whether/when they're at risk of preg
 gen infecundnosterdate = .
 replace infecundnosterdate = 0 if inlist(FECUND, 1, 2, 3)
 replace infecundnosterdate = 1 if (agemonthster == . & agemonthvas == .) & infecundnosterdate == 0
